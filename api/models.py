@@ -16,6 +16,6 @@ class User(AbstractUser):
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, related_name='profile')
-    income = models.IntegerField(default=0)
-    score = models.IntegerField(default=random.randint(1, 999), 
+    income = models.FloatField(default=0)
+    score = models.IntegerField(default=0, 
         editable=False)

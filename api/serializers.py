@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from api.models import User, UserProfile
+import random
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -23,7 +24,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user = User(**validated_data)
         user.set_password(password)
         user.save()
-        UserProfile.objects.create(user=user, **profile_data)
+        print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n',profile_data['income'])
+        UserProfile.objects.create(user=user, score=random.randrange(1,999), income=profile_data['income'])
         return user
 
     def update(self, instance, validated_data):
