@@ -27,8 +27,21 @@ class CreditSerializerField(serializers.Field):
 
 class SolicitationSerializer(serializers.ModelSerializer):
     credit = CreditSerializerField()
-    
+
+    def _user(self, obj):
+        request = self.context.get('request', None)
+        if request:
+            return request.user
+
     class Meta : 
         model = Solicitation
         fields = "__all__"
+
+    def create(self, validated_data):
+        solicitation = Solicitation(
+            credit=validated_data['credit'],
+            fk_users=self.context['request'].user
+        )
+        solicitation.save()
+        return solicitation
 
