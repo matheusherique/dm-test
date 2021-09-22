@@ -1,14 +1,11 @@
 from rest_framework import serializers
 from .models import Solicitation
 
-class SolicitationSerializer(serializers.ModelSerializer):
-    credit = serializers.SerializerMethodField(method_name='calculate_credit')
-    
-    class Meta : 
-        model = Solicitation
-        fields = "__all__"
+class CreditSerializerField(serializers.Field):
+    def to_representation(self, value):
+         return value
 
-    def calculate_credit(self, instance):
+    def to_internal_value(self, data):
         request = self.context.get('request')
         user = request.user
         income = user.profile.income
@@ -26,4 +23,12 @@ class SolicitationSerializer(serializers.ModelSerializer):
             return income*2
         elif(score >= 951 and score <= 999):
             return 1000000.0
+
+
+class SolicitationSerializer(serializers.ModelSerializer):
+    credit = CreditSerializerField()
+    
+    class Meta : 
+        model = Solicitation
+        fields = "__all__"
 
