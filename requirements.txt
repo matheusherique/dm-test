@@ -5,3 +5,6 @@ markdown
 django-filter
 django-rest-auth
 gunicorn
+dj_database_url
+dotenv
+django-heroku
