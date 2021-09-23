@@ -1,1 +1,0 @@
-web: gunicorn dmtest.wsgi --log-file -
